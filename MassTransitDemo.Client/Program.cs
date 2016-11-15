@@ -8,14 +8,14 @@ using MassTransitDemo.Contract;
 
 namespace MassTransitDemo.Client
 {
-    public class Program
+    public static class Program
     {
         private static readonly Uri BaseUri = new Uri("rabbitmq://localhost");
         private static readonly Random Random = new Random();
 
         public static void Main(string[] args)
         {
-            RunAsync().Wait();
+            Task.Run(RunAsync).Wait();
         }
 
         private static async Task<int> RunAsync()
@@ -38,19 +38,20 @@ namespace MassTransitDemo.Client
                 {
                     case '1':
                         result = await stuffClient.Request(new DoStuff(Random.Next(10), 2.3));
+                        Console.WriteLine($"Result: {result?.Message}");
                         break;
 
                     case '2':
                         result = await otherClient.Request(new DoOtherStuff(Random.Next(20)));
+                        Console.WriteLine($"Result: {result?.Message}");
                         break;
 
                     case '3':
                         var endpoint = await bus.GetSendEndpoint(new Uri(BaseUri, @"\MassTransitDemo_CommandQueue"));
                         await endpoint.Send<IDoBadStuff>(new { });
+                        await Task.Delay(1000);
                         break;
                 }
-
-                Console.WriteLine($"Result: {result?.Message}");
             }
         }
 

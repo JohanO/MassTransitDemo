@@ -3,6 +3,7 @@
 // transmitted, in any form or by any means, without the prior
 // permission, in writing, of Tetra Pak.
 
+using System.Linq;
 using System.Threading.Tasks;
 
 using MassTransit;
@@ -14,14 +15,16 @@ namespace MassTransitDemo.Client
 {
     public class EventHandler :
         IConsumer<IStuffDone>,
-        IConsumer<IOtherStuffDone>
+        IConsumer<IOtherStuffDone>,
+        IConsumer<Fault>
     {
-        public async Task Consume(ConsumeContext<IStuffDone> context) => 
-            await Out.WriteLineAsync($"StuffDone: StuffNumber = {context.Message.StuffNumber}");
+        public Task Consume(ConsumeContext<IStuffDone> context) =>
+            Out.WriteLineAsync($"StuffDone: StuffNumber = {context.Message.StuffNumber}");
 
-        public async Task Consume(ConsumeContext<IOtherStuffDone> context)
-        {
-            await Out.WriteLineAsync($"OtherStuffDone: {context.Message.OtherStuffNumber}");
-        }
+        public Task Consume(ConsumeContext<IOtherStuffDone> context) =>
+            Out.WriteLineAsync($"OtherStuffDone: {context.Message.OtherStuffNumber}");
+
+        public Task Consume(ConsumeContext<Fault> context) =>
+            Out.WriteLineAsync($"Fault: {context.Message.Exceptions[0].Message}");
     }
 }
