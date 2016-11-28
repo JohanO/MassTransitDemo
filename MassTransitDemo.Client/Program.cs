@@ -1,10 +1,13 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Threading.Tasks;
 
 using MassTransit;
 using MassTransit.Policies;
 
 using MassTransitDemo.Contract;
+
+using static System.Console;
 
 namespace MassTransitDemo.Client
 {
@@ -18,32 +21,30 @@ namespace MassTransitDemo.Client
             Task.Run(RunAsync).Wait();
         }
 
-        private static async Task<int> RunAsync()
+        private static async Task RunAsync()
         {
             var bus = StartBus();
             var stuffClient = bus.CreatePublishRequestClient<IDoStuff, ICommandValidationResult>(TimeSpan.FromSeconds(10));
             var otherClient = bus.CreatePublishRequestClient<IDoOtherStuff, ICommandValidationResult>(TimeSpan.FromSeconds(10));
 
-            Console.WriteLine("1. Send DoStuff");
-            Console.WriteLine("2. Send DoOtherStuff");
-            Console.WriteLine("3. Send DoBadStuff");
+            WriteLine("1. Send DoStuff");
+            WriteLine("2. Send DoOtherStuff");
+            WriteLine("3. Send DoBadStuff");
+            WriteLine("4. Create TrafficLight");
 
             while (true)
             {
-                var choice = Console.ReadKey();
-                Console.WriteLine();
-
-                ICommandValidationResult result = null;
+                
+                var choice = ReadKey();
+                WriteLine();
                 switch (choice.KeyChar)
                 {
                     case '1':
-                        result = await stuffClient.Request(new DoStuff(Random.Next(10), 2.3));
-                        Console.WriteLine($"Result: {result?.Message}");
+                        await stuffClient.Request(new DoStuff(Random.Next(10), 2.3)).WriteResultAsync();
                         break;
 
                     case '2':
-                        result = await otherClient.Request(new DoOtherStuff(Random.Next(20)));
-                        Console.WriteLine($"Result: {result?.Message}");
+                        await otherClient.Request(new DoOtherStuff(Random.Next(20))).WriteResultAsync();
                         break;
 
                     case '3':
@@ -51,8 +52,25 @@ namespace MassTransitDemo.Client
                         await endpoint.Send<IDoBadStuff>(new { });
                         await Task.Delay(1000);
                         break;
+
+                    case '4':
+                        await CreateTrafficLight(bus).WriteResultAsync();
+                        break;
+
+                    default:
+                        WriteLine($"Invalid choice {choice.KeyChar}");
+                        break;
                 }
             }
+        }
+
+        private static Task<ICommandValidationResult> CreateTrafficLight(IBusControl bus)
+        {
+            Console.Write("Enter new traffic light id: ");
+            var id = int.Parse(Console.ReadLine() ?? "1");
+
+            var client = bus.CreatePublishRequestClient<ICreateTrafficLightCommand, ICommandValidationResult>(TimeSpan.FromSeconds(10));
+            return client.Request(new CreateTrafficLightCommand { TrafficLightId = id });
         }
 
         private static IBusControl StartBus()
