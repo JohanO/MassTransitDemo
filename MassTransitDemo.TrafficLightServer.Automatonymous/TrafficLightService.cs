@@ -37,7 +37,7 @@ namespace MassTransitDemo.TrafficLightServer.Automatonymous
                     hostConfig.Password("guest");
                 });
 
-                config.ReceiveEndpoint(host, "MassTransitDemo_CommandQueue", e =>
+                config.ReceiveEndpoint(host, "MassTransitDemo_CommandQueue_Automatonymus", e =>
                 {
                     e.UseRetry(new ImmediateRetryPolicy(new AllPolicyExceptionFilter(), 2));
                     //e.StateMachineSaga();

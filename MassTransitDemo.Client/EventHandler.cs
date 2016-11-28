@@ -16,7 +16,8 @@ namespace MassTransitDemo.Client
     public class EventHandler :
         IConsumer<IStuffDone>,
         IConsumer<IOtherStuffDone>,
-        IConsumer<Fault>
+        IConsumer<Fault>,
+        IConsumer<ILightChangedEvent>
     {
         public Task Consume(ConsumeContext<IStuffDone> context) =>
             Out.WriteLineAsync($"StuffDone: StuffNumber = {context.Message.StuffNumber}");
@@ -26,5 +27,8 @@ namespace MassTransitDemo.Client
 
         public Task Consume(ConsumeContext<Fault> context) =>
             Out.WriteLineAsync($"Fault: {context.Message.Exceptions[0].Message}");
+
+        public Task Consume(ConsumeContext<ILightChangedEvent> context) =>
+            Out.WriteLineAsync($"TrafficLight Id={context.Message.TrafficLightId} Color={context.Message.Color} IsOn={context.Message.IsOn}");
     }
 }

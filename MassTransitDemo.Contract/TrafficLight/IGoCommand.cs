@@ -2,7 +2,7 @@
 
 namespace MassTransitDemo.Contract
 {
-    public interface IGoGreenCommand : ICommand
+    public interface IGoCommand : ICommand
     {
         int TrafficLightId { get; }
     }

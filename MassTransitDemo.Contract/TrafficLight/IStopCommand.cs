@@ -1,6 +1,6 @@
 ﻿namespace MassTransitDemo.Contract
 {
-    public interface IGoRedCommand : ICommand
+    public interface IStopCommand : ICommand
     {
         int TrafficLightId { get; }
     }

@@ -30,7 +30,9 @@ namespace MassTransitDemo.Client
             WriteLine("1. Send DoStuff");
             WriteLine("2. Send DoOtherStuff");
             WriteLine("3. Send DoBadStuff");
-            WriteLine("4. Create TrafficLight");
+            WriteLine("4. Send CreateTrafficLight");
+            WriteLine("5. Send Go");
+            WriteLine("6. Send Stop");
 
             while (true)
             {
@@ -57,6 +59,14 @@ namespace MassTransitDemo.Client
                         await CreateTrafficLight(bus).WriteResultAsync();
                         break;
 
+                    case '5':
+                        await SendGo(bus).WriteResultAsync();
+                        break;
+
+                    case '6':
+                        await SendStop(bus).WriteResultAsync();
+                        break;
+
                     default:
                         WriteLine($"Invalid choice {choice.KeyChar}");
                         break;
@@ -66,11 +76,29 @@ namespace MassTransitDemo.Client
 
         private static Task<ICommandValidationResult> CreateTrafficLight(IBusControl bus)
         {
-            Console.Write("Enter new traffic light id: ");
-            var id = int.Parse(Console.ReadLine() ?? "1");
+            Write("Enter new traffic light id: ");
+            var id = int.Parse(ReadLine() ?? "1");
 
             var client = bus.CreatePublishRequestClient<ICreateTrafficLightCommand, ICommandValidationResult>(TimeSpan.FromSeconds(10));
             return client.Request(new CreateTrafficLightCommand { TrafficLightId = id });
+        }
+
+        private static Task<ICommandValidationResult> SendGo(IBusControl bus)
+        {
+            Write("Enter traffic light id: ");
+            var id = int.Parse(ReadLine() ?? "1");
+
+            var client = bus.CreatePublishRequestClient<IGoCommand, ICommandValidationResult>(TimeSpan.FromSeconds(10));
+            return client.Request(new GoCommand { TrafficLightId = id });
+        }
+
+        private static Task<ICommandValidationResult> SendStop(IBusControl bus)
+        {
+            Write("Enter traffic light id: ");
+            var id = int.Parse(ReadLine() ?? "1");
+
+            var client = bus.CreatePublishRequestClient<IStopCommand, ICommandValidationResult>(TimeSpan.FromSeconds(10));
+            return client.Request(new StopCommand { TrafficLightId = id });
         }
 
         private static IBusControl StartBus()

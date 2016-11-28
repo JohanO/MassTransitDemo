@@ -54,8 +54,8 @@
     <Compile Include="IStuffDone.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TrafficLight\ICreateTrafficLightCommand.cs" />
-    <Compile Include="TrafficLight\IGoGreenCommand.cs" />
-    <Compile Include="TrafficLight\IGoRedCommand.cs" />
+    <Compile Include="TrafficLight\IGoCommand.cs" />
+    <Compile Include="TrafficLight\IStopCommand.cs" />
     <Compile Include="TrafficLight\ILightChangedEvent.cs" />
     <Compile Include="TrafficLight\ITrafficLightCreatedEvent.cs" />
   </ItemGroup>

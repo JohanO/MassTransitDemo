@@ -59,8 +59,8 @@ namespace MassTransitDemo.TrafficLightServer.Automatonymous
         #region Events
 
         public Event<ICreateTrafficLightCommand> Create { get; set; }
-        public Event<IGoGreenCommand> GoGreen { get; set; }
-        public Event<IGoRedCommand> GoRed { get; set; }
+        public Event<IGoCommand> GoGreen { get; set; }
+        public Event<IStopCommand> GoRed { get; set; }
 
         #endregion
 
