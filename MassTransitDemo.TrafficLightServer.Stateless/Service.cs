@@ -4,6 +4,9 @@ using MassTransit;
 using MassTransit.Policies;
 
 using MassTransitDemo.Contract;
+using MassTransitDemo.TrafficLightServer.Stateless.Domain;
+using MassTransitDemo.TrafficLightServer.Stateless.Handlers;
+using MassTransitDemo.TrafficLightServer.Stateless.Persistance;
 
 using Microsoft.Practices.Unity;
 
@@ -20,6 +23,8 @@ namespace MassTransitDemo.TrafficLightServer.Stateless
         
         public Service()
         {
+            _container.RegisterType<ISaga, Saga>(new ContainerControlledLifetimeManager());
+            _container.RegisterType<IRepository, Repository>(new ContainerControlledLifetimeManager());
             _container.RegisterType<IConsumer<ICreateTrafficLightCommand>, CreateTrafficLightCommandConsumer>();
             _container.RegisterType<IConsumer<IGoCommand>, GoCommandConsumer>();
             _container.RegisterType<IConsumer<IStopCommand>, StopCommandConsumer>();

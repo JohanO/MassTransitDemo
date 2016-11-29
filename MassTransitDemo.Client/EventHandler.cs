@@ -17,6 +17,7 @@ namespace MassTransitDemo.Client
         IConsumer<IStuffDone>,
         IConsumer<IOtherStuffDone>,
         IConsumer<Fault>,
+        IConsumer<ITrafficLightCreatedEvent>,
         IConsumer<ILightChangedEvent>
     {
         public Task Consume(ConsumeContext<IStuffDone> context) =>
@@ -27,6 +28,9 @@ namespace MassTransitDemo.Client
 
         public Task Consume(ConsumeContext<Fault> context) =>
             Out.WriteLineAsync($"Fault: {context.Message.Exceptions[0].Message}");
+
+        public Task Consume(ConsumeContext<ITrafficLightCreatedEvent> context) =>
+            Out.WriteLineAsync($"TrafficLightCreated: Id={context.Message.TrafficLightId}");
 
         public Task Consume(ConsumeContext<ILightChangedEvent> context) =>
             Out.WriteLineAsync($"TrafficLight Id={context.Message.TrafficLightId} Color={context.Message.Color} IsOn={context.Message.IsOn}");

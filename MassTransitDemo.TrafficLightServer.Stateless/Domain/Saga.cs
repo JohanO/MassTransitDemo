@@ -1,6 +1,4 @@
-﻿using System;
-using System.Net.Mail;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 using MassTransit;
 
@@ -8,46 +6,51 @@ using MassTransitDemo.Contract;
 
 using Stateless;
 
-namespace MassTransitDemo.TrafficLightServer.Stateless
+namespace MassTransitDemo.TrafficLightServer.Stateless.Domain
 {
-    public class Saga
+    public class Saga : ISaga
     {
         private readonly IBusControl _bus;
-        private readonly TrafficLight _trafficLight;
+        private readonly StateMachine<State, Trigger> _stateMachine;
 
-        public Saga(IBusControl bus, TrafficLight trafficLight)
+        private TrafficLight _trafficLight;
+
+        public Saga(IBusControl bus)
         {
             _bus = bus;
-            _trafficLight = trafficLight;
 
-            StateMachine = new StateMachine<State, Trigger>(
+            _stateMachine = new StateMachine<State, Trigger>(
                 () => _trafficLight.State,
                 state => _trafficLight.State = state);
-
-            StateMachine.Configure(State.Initial)
+            
+            _stateMachine.Configure(State.Initial)
                 .Permit(Trigger.ToRed, State.Red);
 
-            StateMachine.Configure(State.Red)
+            _stateMachine.Configure(State.Red)
                 .OnEntryAsync(() => SendLightChangedAsync("Red", true))
                 .Permit(Trigger.ToRedYellow, State.RedYellow);
 
-            StateMachine.Configure(State.RedYellow)
+            _stateMachine.Configure(State.RedYellow)
                 .OnEntryAsync(EnterRedYellow)
                 .OnExitAsync(ExitRedYellow)
                 .Permit(Trigger.ToGreen, State.Green);
 
-            StateMachine.Configure(State.Green)
+            _stateMachine.Configure(State.Green)
                 .OnEntryAsync(() => SendLightChangedAsync("Green", true))
                 .OnExitAsync(() => SendLightChangedAsync("Green", false))
                 .Permit(Trigger.ToYellow, State.Yellow);
 
-            StateMachine.Configure(State.Yellow)
+            _stateMachine.Configure(State.Yellow)
                 .OnEntryAsync(EnterYellow)
                 .OnExitAsync(() => SendLightChangedAsync("Yellow", false))
                 .Permit(Trigger.ToRed, State.Red);
         }
 
-        public StateMachine<State, Trigger> StateMachine { get; private set; }
+        public Task FireAsync(TrafficLight trafficLight, Trigger trigger)
+        {
+            _trafficLight = trafficLight;
+            return _stateMachine.FireAsync(trigger);
+        } 
 
         private Task EnterRedYellow()
         {
@@ -77,7 +80,7 @@ namespace MassTransitDemo.TrafficLightServer.Stateless
         private async void Delay(Trigger trigger, int milliseconds)
         {
             await Task.Delay(milliseconds);
-            await StateMachine.FireAsync(trigger);
+            await _stateMachine.FireAsync(trigger);
         }
     }
 }
