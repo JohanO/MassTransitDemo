@@ -58,6 +58,9 @@
     <Compile Include="TrafficLight\IStopCommand.cs" />
     <Compile Include="TrafficLight\ILightChangedEvent.cs" />
     <Compile Include="TrafficLight\ITrafficLightCreatedEvent.cs" />
+    <Compile Include="TrafficLight\IStateQuery.cs" />
+    <Compile Include="TrafficLight\IStateQueryResult.cs" />
+    <Compile Include="TrafficLight\ITrafficLightState.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,6 +1,9 @@
 ﻿using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Media;
+
+using MassTransitDemo.Contract;
 
 namespace MassTransitDemo.TrafficLightDisplay.ViewModel
 {
@@ -13,6 +16,14 @@ namespace MassTransitDemo.TrafficLightDisplay.ViewModel
         public TrafficLightViewModel(int id)
         {
             Id = id;
+        }
+
+        public TrafficLightViewModel(ITrafficLightState state)
+        {
+            Id = state.Id;
+            RedOn = state.LightsOn.Contains("Red");
+            YellowOn = state.LightsOn.Contains("Yellow");
+            GreenOn = state.LightsOn.Contains("Green");
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

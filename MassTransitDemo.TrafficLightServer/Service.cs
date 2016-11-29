@@ -28,6 +28,7 @@ namespace MassTransitDemo.TrafficLightServer
             _container.RegisterType<IConsumer<ICreateTrafficLightCommand>, CreateTrafficLightCommandConsumer>();
             _container.RegisterType<IConsumer<IGoCommand>, GoCommandConsumer>();
             _container.RegisterType<IConsumer<IStopCommand>, StopCommandConsumer>();
+            _container.RegisterType<IConsumer<IStateQuery>, StateQueryConsumer>();
         }
 
         public bool Start(HostControl hostControl)
@@ -54,7 +55,7 @@ namespace MassTransitDemo.TrafficLightServer
                         hostConfig.Password("guest");
                     });
 
-                config.ReceiveEndpoint(host, "MassTransitDemo_CommandQueue_Stateless", e =>
+                config.ReceiveEndpoint(host, "MassTransitDemo_TrafficLightQueue", e =>
                     {
                         e.UseRetry(new ImmediateRetryPolicy(new AllPolicyExceptionFilter(), 2));
                         e.LoadFrom(_container);

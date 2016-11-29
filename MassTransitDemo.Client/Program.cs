@@ -23,7 +23,7 @@ namespace MassTransitDemo.Client
 
         private static async Task RunAsync()
         {
-            var bus = StartBus();
+            var bus = await StartBus();
             var stuffClient = bus.CreatePublishRequestClient<IDoStuff, ICommandValidationResult>(TimeSpan.FromSeconds(10));
             var otherClient = bus.CreatePublishRequestClient<IDoOtherStuff, ICommandValidationResult>(TimeSpan.FromSeconds(10));
 
@@ -33,10 +33,11 @@ namespace MassTransitDemo.Client
             WriteLine("4. Send CreateTrafficLight");
             WriteLine("5. Send Go");
             WriteLine("6. Send Stop");
+            WriteLine("0. Exit");
 
-            while (true)
+            var exit = false;
+            while (!exit)
             {
-                
                 var choice = ReadKey();
                 WriteLine();
                 switch (choice.KeyChar)
@@ -67,41 +68,46 @@ namespace MassTransitDemo.Client
                         await SendStop(bus).WriteResultAsync();
                         break;
 
+                    case '0':
+                        exit = true;
+                        break;
+
                     default:
                         WriteLine($"Invalid choice {choice.KeyChar}");
                         break;
                 }
             }
+
+            await bus.StopAsync();
         }
 
         private static Task<ICommandValidationResult> CreateTrafficLight(IBusControl bus)
         {
-            Write("Enter new traffic light id: ");
-            var id = int.Parse(ReadLine() ?? "1");
-
             var client = bus.CreatePublishRequestClient<ICreateTrafficLightCommand, ICommandValidationResult>(TimeSpan.FromSeconds(10));
-            return client.Request(new CreateTrafficLightCommand { TrafficLightId = id });
+            return client.Request(new CreateTrafficLightCommand { TrafficLightId = ReadTrafficLightId() });
         }
 
         private static Task<ICommandValidationResult> SendGo(IBusControl bus)
         {
-            Write("Enter traffic light id: ");
-            var id = int.Parse(ReadLine() ?? "1");
-
             var client = bus.CreatePublishRequestClient<IGoCommand, ICommandValidationResult>(TimeSpan.FromSeconds(10));
-            return client.Request(new GoCommand { TrafficLightId = id });
+            return client.Request(new GoCommand { TrafficLightId = ReadTrafficLightId() });
         }
 
         private static Task<ICommandValidationResult> SendStop(IBusControl bus)
         {
-            Write("Enter traffic light id: ");
-            var id = int.Parse(ReadLine() ?? "1");
-
             var client = bus.CreatePublishRequestClient<IStopCommand, ICommandValidationResult>(TimeSpan.FromSeconds(10));
-            return client.Request(new StopCommand { TrafficLightId = id });
+            return client.Request(new StopCommand { TrafficLightId = ReadTrafficLightId() });
         }
 
-        private static IBusControl StartBus()
+        private static int ReadTrafficLightId()
+        {
+            Write("Enter traffic light id: ");
+            var id = int.Parse(ReadKey().KeyChar.ToString());
+            WriteLine();
+            return id;
+        }
+
+        private static async Task<IBusControl> StartBus()
         {
             var bus = Bus.Factory.CreateUsingRabbitMq(config =>
             {
@@ -113,7 +119,7 @@ namespace MassTransitDemo.Client
                 config.ReceiveEndpoint(host, "MassTransitDemo_Subscriber", e => e.Consumer<EventHandler>());
             });
 
-            bus.Start();
+            await bus.StartAsync();
             return bus;
         }
     }

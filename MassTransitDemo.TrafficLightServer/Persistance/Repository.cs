@@ -13,5 +13,7 @@ namespace MassTransitDemo.TrafficLightServer.Persistance
         public TrafficLight FindById(int id) => _trafficLights.ContainsKey(id) ? _trafficLights[id] : null;
 
         public void Save(TrafficLight trafficLight) => _trafficLights[trafficLight.Id] = trafficLight;
+
+        public IEnumerable<TrafficLight> FindAll() => _trafficLights.Values;
     }
 }

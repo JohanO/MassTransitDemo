@@ -42,7 +42,12 @@ namespace MassTransitDemo.TrafficLightDisplay
                     hostConfig.Password("guest");
                 });
 
-                config.ReceiveEndpoint(host, "MassTransitDemo_Display", e => e.Consumer<Model.EventHandler>());
+                config.ReceiveEndpoint(host, "MassTransitDemo_Display", e =>
+                {
+                    e.Consumer<Model.EventHandler>();
+                    e.AutoDelete = true;
+                    e.Durable = false;
+                });
             });
     }
 }

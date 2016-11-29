@@ -1,4 +1,6 @@
-﻿using MassTransitDemo.TrafficLightServer.Domain;
+﻿using System.Collections.Generic;
+
+using MassTransitDemo.TrafficLightServer.Domain;
 
 namespace MassTransitDemo.TrafficLightServer.Persistance
 {
@@ -9,5 +11,7 @@ namespace MassTransitDemo.TrafficLightServer.Persistance
         TrafficLight FindById(int trafficLightId);
 
         void Save(TrafficLight trafficLight);
+
+        IEnumerable<TrafficLight> FindAll();
     }
 }

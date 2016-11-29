@@ -95,6 +95,7 @@
     <Compile Include="Handlers\CreateTrafficLightCommandConsumer.cs" />
     <Compile Include="Handlers\GoCommandConsumer.cs" />
     <Compile Include="Handlers\HandlerExtensions.cs" />
+    <Compile Include="Handlers\StateQueryConsumer.cs" />
     <Compile Include="Persistance\IRepository.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
