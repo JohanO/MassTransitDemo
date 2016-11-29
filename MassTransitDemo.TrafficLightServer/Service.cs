@@ -23,7 +23,7 @@ namespace MassTransitDemo.TrafficLightServer
         
         public Service()
         {
-            _container.RegisterType<ISaga, Saga>(new ContainerControlledLifetimeManager());
+            _container.RegisterType<ISaga, Saga>();
             _container.RegisterType<IRepository, Repository>(new ContainerControlledLifetimeManager());
             _container.RegisterType<IConsumer<ICreateTrafficLightCommand>, CreateTrafficLightCommandConsumer>();
             _container.RegisterType<IConsumer<IGoCommand>, GoCommandConsumer>();
