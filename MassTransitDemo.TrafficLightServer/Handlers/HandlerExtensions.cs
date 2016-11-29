@@ -4,7 +4,7 @@ using MassTransit;
 
 using MassTransitDemo.Contract;
 
-namespace MassTransitDemo.TrafficLightServer.Stateless.Handlers
+namespace MassTransitDemo.TrafficLightServer.Handlers
 {
     public static class HandlerExtensions
     {

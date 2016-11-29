@@ -4,15 +4,15 @@ using MassTransit;
 using MassTransit.Policies;
 
 using MassTransitDemo.Contract;
-using MassTransitDemo.TrafficLightServer.Stateless.Domain;
-using MassTransitDemo.TrafficLightServer.Stateless.Handlers;
-using MassTransitDemo.TrafficLightServer.Stateless.Persistance;
+using MassTransitDemo.TrafficLightServer.Domain;
+using MassTransitDemo.TrafficLightServer.Handlers;
+using MassTransitDemo.TrafficLightServer.Persistance;
 
 using Microsoft.Practices.Unity;
 
 using Topshelf;
 
-namespace MassTransitDemo.TrafficLightServer.Stateless
+namespace MassTransitDemo.TrafficLightServer
 {
     public class Service : ServiceControl
     {

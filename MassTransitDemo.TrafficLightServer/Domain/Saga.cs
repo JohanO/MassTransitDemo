@@ -6,7 +6,7 @@ using MassTransitDemo.Contract;
 
 using Stateless;
 
-namespace MassTransitDemo.TrafficLightServer.Stateless.Domain
+namespace MassTransitDemo.TrafficLightServer.Domain
 {
     public class Saga : ISaga
     {

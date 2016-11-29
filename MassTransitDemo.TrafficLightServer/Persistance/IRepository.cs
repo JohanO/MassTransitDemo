@@ -1,6 +1,6 @@
-﻿using MassTransitDemo.TrafficLightServer.Stateless.Domain;
+﻿using MassTransitDemo.TrafficLightServer.Domain;
 
-namespace MassTransitDemo.TrafficLightServer.Stateless.Persistance
+namespace MassTransitDemo.TrafficLightServer.Persistance
 {
     public interface IRepository
     {

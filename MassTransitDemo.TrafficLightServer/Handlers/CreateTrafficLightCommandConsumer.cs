@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 using MassTransit;
 
 using MassTransitDemo.Contract;
-using MassTransitDemo.TrafficLightServer.Stateless.Domain;
-using MassTransitDemo.TrafficLightServer.Stateless.Persistance;
+using MassTransitDemo.TrafficLightServer.Domain;
+using MassTransitDemo.TrafficLightServer.Persistance;
 
-namespace MassTransitDemo.TrafficLightServer.Stateless.Handlers
+namespace MassTransitDemo.TrafficLightServer.Handlers
 {
     public class CreateTrafficLightCommandConsumer : IConsumer<ICreateTrafficLightCommand>
     {

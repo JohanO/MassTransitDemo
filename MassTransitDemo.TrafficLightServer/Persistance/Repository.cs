@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-using MassTransitDemo.TrafficLightServer.Stateless.Domain;
+using MassTransitDemo.TrafficLightServer.Domain;
 
-namespace MassTransitDemo.TrafficLightServer.Stateless.Persistance
+namespace MassTransitDemo.TrafficLightServer.Persistance
 {
     public class Repository : IRepository
     {

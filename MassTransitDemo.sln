@@ -9,9 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MassTransitDemo.Client", "M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MassTransitDemo.Server", "MassTransitDemo.Server\MassTransitDemo.Server.csproj", "{DD543859-582E-492E-A3F3-427DAE6E77CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MassTransitDemo.TrafficLightServer.Automatonymous", "MassTransitDemo.TrafficLightServer.Automatonymous\MassTransitDemo.TrafficLightServer.Automatonymous.csproj", "{F4B2F1D9-DF89-4321-9E5B-851BB226EC03}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MassTransitDemo.TrafficLightServer.Stateless", "MassTransitDemo.TrafficLightServer.Stateless\MassTransitDemo.TrafficLightServer.Stateless.csproj", "{AD26A85E-10D0-4047-91AF-4448039F8D84}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MassTransitDemo.TrafficLightServer", "MassTransitDemo.TrafficLightServer\MassTransitDemo.TrafficLightServer.csproj", "{AD26A85E-10D0-4047-91AF-4448039F8D84}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,10 +29,6 @@ Global
 		{DD543859-582E-492E-A3F3-427DAE6E77CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD543859-582E-492E-A3F3-427DAE6E77CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD543859-582E-492E-A3F3-427DAE6E77CA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F4B2F1D9-DF89-4321-9E5B-851BB226EC03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F4B2F1D9-DF89-4321-9E5B-851BB226EC03}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F4B2F1D9-DF89-4321-9E5B-851BB226EC03}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F4B2F1D9-DF89-4321-9E5B-851BB226EC03}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AD26A85E-10D0-4047-91AF-4448039F8D84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AD26A85E-10D0-4047-91AF-4448039F8D84}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD26A85E-10D0-4047-91AF-4448039F8D84}.Release|Any CPU.ActiveCfg = Release|Any CPU

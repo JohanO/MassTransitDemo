@@ -1,4 +1,4 @@
-﻿namespace MassTransitDemo.TrafficLightServer.Stateless.Domain
+﻿namespace MassTransitDemo.TrafficLightServer.Domain
 {
     public enum State
     {

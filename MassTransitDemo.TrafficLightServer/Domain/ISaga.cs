@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace MassTransitDemo.TrafficLightServer.Stateless.Domain
+namespace MassTransitDemo.TrafficLightServer.Domain
 {
     public interface ISaga
     {
