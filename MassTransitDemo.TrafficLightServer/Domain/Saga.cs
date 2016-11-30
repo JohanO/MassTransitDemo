@@ -3,6 +3,7 @@
 using MassTransit;
 
 using MassTransitDemo.Contract;
+using MassTransitDemo.TrafficLightServer.Persistance;
 
 using Stateless;
 
@@ -11,17 +12,17 @@ namespace MassTransitDemo.TrafficLightServer.Domain
     public class Saga : ISaga
     {
         private readonly IBusControl _bus;
+        private readonly IRepository _repository;
         private readonly StateMachine<State, Trigger> _stateMachine;
 
-        private TrafficLight _trafficLight;
+        private int _trafficLightId;
 
-        public Saga(IBusControl bus)
+        public Saga(IBusControl bus, IRepository repository)
         {
             _bus = bus;
+            _repository = repository;
 
-            _stateMachine = new StateMachine<State, Trigger>(
-                () => _trafficLight.State,
-                state => _trafficLight.State = state);
+            _stateMachine = new StateMachine<State, Trigger>(LoadState, SaveState);
             
             _stateMachine.Configure(State.Initial)
                 .Permit(Trigger.ToRed, State.Red);
@@ -46,11 +47,20 @@ namespace MassTransitDemo.TrafficLightServer.Domain
                 .Permit(Trigger.ToRed, State.Red);
         }
 
-        public Task FireAsync(TrafficLight trafficLight, Trigger trigger)
+        public Task FireAsync(int trafficLightId, Trigger trigger)
         {
-            _trafficLight = trafficLight;
+            _trafficLightId = trafficLightId;
             return _stateMachine.FireAsync(trigger);
-        } 
+        }
+
+        private State LoadState() => _repository.FindById(_trafficLightId).State;
+
+        private void SaveState(State state)
+        {
+            var trafficLight = _repository.FindById(_trafficLightId);
+            trafficLight.State = state;
+            _repository.Save(trafficLight);
+        }
 
         private Task EnterRedYellow()
         {
@@ -72,7 +82,7 @@ namespace MassTransitDemo.TrafficLightServer.Domain
         private Task SendLightChangedAsync(string color, bool isOn) => 
             _bus.Publish<ILightChangedEvent>(new
             {
-                TrafficLightId = _trafficLight.Id,
+                TrafficLightId = _trafficLightId,
                 Color = color,
                 IsOn = isOn
             });

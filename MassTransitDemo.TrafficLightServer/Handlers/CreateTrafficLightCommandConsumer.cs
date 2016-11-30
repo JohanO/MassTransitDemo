@@ -39,8 +39,7 @@ namespace MassTransitDemo.TrafficLightServer.Handlers
                 await context.Publish<ITrafficLightCreatedEvent>(new { cmd.TrafficLightId });
 
                 // Turn on the red light
-                await _saga.FireAsync(trafficLight, Trigger.ToRed);
-                _repository.Save(trafficLight);
+                await _saga.FireAsync(cmd.TrafficLightId, Trigger.ToRed);
             }
         }
     }

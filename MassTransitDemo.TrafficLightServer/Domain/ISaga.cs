@@ -4,6 +4,6 @@ namespace MassTransitDemo.TrafficLightServer.Domain
 {
     public interface ISaga
     {
-        Task FireAsync(TrafficLight trafficLight, Trigger trigger);
+        Task FireAsync(int trafficLightId, Trigger trigger);
     }
 }

@@ -32,10 +32,7 @@ namespace MassTransitDemo.TrafficLightServer.Handlers
             else
             {
                 await context.RespondResultAsync(false, "Validated OK");
-
-                var trafficLight = _repository.FindById(cmd.TrafficLightId);
-                await _saga.FireAsync(trafficLight, Trigger.ToYellow);
-                _repository.Save(trafficLight);
+                await _saga.FireAsync(cmd.TrafficLightId, Trigger.ToYellow);
             }
         }
     }
