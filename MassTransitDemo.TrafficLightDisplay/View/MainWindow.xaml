@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MassTransitDemo.TrafficLightDisplay"
         xmlns:ViewModel="clr-namespace:MassTransitDemo.TrafficLightDisplay.ViewModel" x:Class="MassTransitDemo.TrafficLightDisplay.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="TrafficLight Display" Height="370" Width="525">
     <Window.Resources>
         <RadialGradientBrush x:Key="RedOnBrush">
             <GradientStop Color="Black" Offset="0.997"/>
@@ -34,10 +34,15 @@
             <GradientStop Color="#FF294C2F" Offset="0.581"/>
             <GradientStop Color="#FF56A35C" Offset="0.969"/>
         </RadialGradientBrush>
-        
+
         <DataTemplate x:Key="TrafficLightTemplate">
-            <Grid Width="100" Height="300" Margin="4,0">
-                <Rectangle HorizontalAlignment="Stretch" Height="Auto" Stroke="Black" VerticalAlignment="Stretch">
+            <Grid Width="100" Height="324" Margin="4,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="300"/>
+                </Grid.RowDefinitions>
+                <Label x:Name="label" Content="{Binding Id, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold"/>
+                <Rectangle Grid.Row="1" HorizontalAlignment="Stretch" Height="Auto" Stroke="Black" VerticalAlignment="Stretch">
                     <Rectangle.Fill>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                             <GradientStop Color="Black" Offset="0"/>
@@ -45,9 +50,9 @@
                         </LinearGradientBrush>
                     </Rectangle.Fill>
                 </Rectangle>
-                <Ellipse HorizontalAlignment="Center" Height="90" Stroke="Black" VerticalAlignment="Top" Width="90" Margin="0,5,0,0">
+                <Ellipse HorizontalAlignment="Center" Height="90" Stroke="Black" VerticalAlignment="Top" Width="90" Margin="5,5,5,0" Grid.Row="1">
                     <Ellipse.Style>
-                        <Style TargetType="Ellipse">
+                        <Style TargetType="{x:Type Ellipse}">
                             <Setter Property="Fill" Value="{DynamicResource RedOffBrush}"/>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding RedOn}" Value="True">
@@ -57,9 +62,9 @@
                         </Style>
                     </Ellipse.Style>
                 </Ellipse>
-                <Ellipse HorizontalAlignment="Center" Height="90" Stroke="Black" VerticalAlignment="Center" Width="90" Margin="5,0">
+                <Ellipse HorizontalAlignment="Center" Height="90" Stroke="Black" VerticalAlignment="Center" Width="90" Margin="5,0" Grid.Row="1">
                     <Ellipse.Style>
-                        <Style TargetType="Ellipse">
+                        <Style TargetType="{x:Type Ellipse}">
                             <Setter Property="Fill" Value="{DynamicResource YellowOffBrush}"/>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding YellowOn}" Value="True">
@@ -69,9 +74,9 @@
                         </Style>
                     </Ellipse.Style>
                 </Ellipse>
-                <Ellipse HorizontalAlignment="Center" Height="90" Stroke="Black" VerticalAlignment="Bottom" Width="90" Margin="5,0,5,5">
+                <Ellipse HorizontalAlignment="Center" Height="90" Stroke="Black" VerticalAlignment="Bottom" Width="90" Margin="5,0,5,5" Grid.Row="1">
                     <Ellipse.Style>
-                        <Style TargetType="Ellipse">
+                        <Style TargetType="{x:Type Ellipse}">
                             <Setter Property="Fill" Value="{DynamicResource GreenOffBrush}"/>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding GreenOn}" Value="True">

@@ -16,15 +16,18 @@ namespace MassTransitDemo.TrafficLightDisplay.ViewModel
 
         public MainViewModel()
         {
+            Current = this;
+
             if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
             {
                 TrafficLights.Add(new TrafficLightViewModel(1) {RedOn = true});
                 TrafficLights.Add(new TrafficLightViewModel(2) {YellowOn = true});
                 TrafficLights.Add(new TrafficLightViewModel(3) {GreenOn = true});
             }
-
-            Current = this;
-            QueryState();
+            else
+            {
+                QueryState();
+            }
         }
 
         public ObservableCollection<TrafficLightViewModel> TrafficLights { get; } = new ObservableCollection<TrafficLightViewModel>();
