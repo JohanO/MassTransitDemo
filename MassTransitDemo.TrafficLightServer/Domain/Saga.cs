@@ -22,7 +22,9 @@ namespace MassTransitDemo.TrafficLightServer.Domain
             _bus = bus;
             _repository = repository;
 
-            _stateMachine = new StateMachine<State, Trigger>(LoadState, SaveState);
+            _stateMachine = new StateMachine<State, Trigger>(
+                () => _repository.FindById(_trafficLightId).State,
+                state => _repository.Update(_trafficLightId, state));
             
             _stateMachine.Configure(State.Initial)
                 .Permit(Trigger.ToRed, State.Red);
@@ -51,15 +53,6 @@ namespace MassTransitDemo.TrafficLightServer.Domain
         {
             _trafficLightId = trafficLightId;
             return _stateMachine.FireAsync(trigger);
-        }
-
-        private State LoadState() => _repository.FindById(_trafficLightId).State;
-
-        private void SaveState(State state)
-        {
-            var trafficLight = _repository.FindById(_trafficLightId);
-            trafficLight.State = state;
-            _repository.Save(trafficLight);
         }
 
         private Task EnterRedYellow()

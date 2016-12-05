@@ -10,8 +10,10 @@ namespace MassTransitDemo.TrafficLightServer.Persistance
 
         TrafficLight FindById(int trafficLightId);
 
-        void Save(TrafficLight trafficLight);
-
         IEnumerable<TrafficLight> FindAll();
+
+        void Insert(TrafficLight trafficLight);
+
+        void Update(int trafficLightId, State newState);
     }
 }

@@ -44,6 +44,19 @@ namespace MassTransitDemo.TrafficLightServer.Persistance
 
         public IEnumerable<TrafficLight> FindAll() => TrafficLightTable().Select(x => x.ToTrafficLight());
 
+        public void Insert(TrafficLight trafficLight)
+        {
+            TrafficLightTable().InsertOnSubmit(new TrafficLightDbo(trafficLight));
+            _db.SubmitChanges();
+        }
+
+        public void Update(int trafficLightId, State newState)
+        {
+            var dbo = TrafficLightTable().Single(x => x.Id == trafficLightId);
+            dbo.State = Enum.GetName(typeof(State), newState);
+            _db.SubmitChanges();
+        }
+
         private Table<TrafficLightDbo> TrafficLightTable() => _db.GetTable<TrafficLightDbo>();
     }
 }

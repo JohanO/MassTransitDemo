@@ -34,8 +34,7 @@ namespace MassTransitDemo.TrafficLightServer.Handlers
                 await context.RespondResultAsync(false, "Validated OK");
 
                 // Create the light
-                var trafficLight = new TrafficLight { Id = cmd.TrafficLightId };
-                _repository.Save(trafficLight);
+                _repository.Insert(new TrafficLight { Id = cmd.TrafficLightId });
                 await context.Publish<ITrafficLightCreatedEvent>(new { cmd.TrafficLightId });
 
                 // Turn on the red light

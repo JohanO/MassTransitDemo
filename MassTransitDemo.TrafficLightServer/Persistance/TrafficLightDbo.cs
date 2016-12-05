@@ -9,6 +9,14 @@ namespace MassTransitDemo.TrafficLightServer.Persistance
     [Table(Name = "TrafficLight")]
     public class TrafficLightDbo
     {
+        public TrafficLightDbo() { }
+
+        public TrafficLightDbo(TrafficLight trafficLight)
+        {
+            Id = trafficLight.Id;
+            State = Enum.GetName(typeof(State), trafficLight.State);
+        }
+
         [Column(IsPrimaryKey = true)]
         public int Id { get; set; }
 
