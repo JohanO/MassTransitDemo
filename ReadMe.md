@@ -44,7 +44,7 @@ It handles three different messages:
 
 ### TrafficLightServer
 The traffic light server handles traffic lights. Each light has an id-number and a state
-that according to the following state diagram. 
+according to the following state diagram. 
 
 ![State machine](TrafficLightStateMachine.png)
 
@@ -60,10 +60,13 @@ The traffic light server handles the following messages:
  3. StopCommand. Fires the ToYellow trigger (ToRed is fired after 2 seconds).
  4. StateQuery. Responds with the current state of a traffic light.
 
+When a traffic light changes state, LightChangedEvent are sent to indicate what lights turned on and
+which lights turned off.
+
 ### Client
 Simple console application that can send commands to Server and TrafficLightServer.
 It also displays all events sent by the servers.
 
 ### TrafficLightDisplay
-Simple WPF application displaying traffic lights and their state.
+Simple WPF application listening on events and displaying traffic lights and their state.
 
