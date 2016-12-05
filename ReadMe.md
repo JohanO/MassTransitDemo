@@ -55,10 +55,10 @@ The state machine has five states (Initial, Red, RedYellow, Green and Yellow) an
 
 
 The traffic light server handles the following messages:
-1. CreateTrafficLightCommand. Creates a new traffic light and immediately fires the ToRed trigger.
-2. GoCommand. Fires the ToRedYellow trigger (ToGreen is fired after 2 seconds)
-3. StopCommand. Fires the ToYellow trigger (ToRed is fired after 2 seconds).
-4. StateQuery. Responds with the current state of a traffic light.
+ 1. CreateTrafficLightCommand. Creates a new traffic light and immediately fires the ToRed trigger.
+ 2. GoCommand. Fires the ToRedYellow trigger (ToGreen is fired after 2 seconds)
+ 3. StopCommand. Fires the ToYellow trigger (ToRed is fired after 2 seconds).
+ 4. StateQuery. Responds with the current state of a traffic light.
 
 ### Client
 Simple console application that can send commands to Server and TrafficLightServer.
