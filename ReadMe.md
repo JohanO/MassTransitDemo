@@ -8,7 +8,7 @@ and [RabbitMQ](http://www.rabbitmq.com/).
 ![Application parts](Overview.png)
 
 The system consist of four apps that communicate by sending messages via RabbitMQ.
-It is divided into to logical parts. One that shows the basic use of messaging and CQRS,
+It is divided into two logical parts. One that shows the basic use of messaging and CQRS,
 and one that shows how to use a statemachine with messaging.
 
 
@@ -23,8 +23,8 @@ There are three kinds of messages:
 #### Command vs Query
 
 A command is message that tells the receiver to do something. It changes data.
- When a command is received it is validated and the validation result is returned to the sender.
- Then the command is then executed and data that is changed is sent out as an event.
+When a command is received it is validated and the validation result is returned to the sender.
+Then the command is then executed and data that is changed is sent out as an event.
  
  Example:
  1. Client sends a DoStuff command
@@ -38,9 +38,9 @@ A query is a request for data. It does NOT change any data.
 ### Server
 The server application is a simple application that shows the usage of commands.
 It handles three different messages:
-1. DoStuff. Responds with "Validated OK", then sends a StuffChanged event.
-2. DoOtherStuff. Responds with "Validated OK", then sends an OtherStuffChanged event.
-3. DoBadStuff. Throws an exception
+ 1. DoStuff. Responds with "Validated OK", then sends a StuffChanged event.
+ 2. DoOtherStuff. Responds with "Validated OK", then sends an OtherStuffChanged event.
+ 3. DoBadStuff. Throws an exception
 
 ### TrafficLightServer
 The traffic light server handles traffic lights. Each light has an id-number and a state
