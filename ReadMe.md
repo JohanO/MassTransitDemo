@@ -49,7 +49,7 @@ according to the following state diagram.
 ![State machine](TrafficLightStateMachine.png)
 
 The state machine is implemented using [Stateless](https://github.com/dotnet-state-machine/stateless)
-a .NET framework framework for state machines. 
+a .NET framework for state machines. 
 The state machine has five states (Initial, Red, RedYellow, Green and Yellow) and four triggers
 (ToRed, ToRedYellow, ToGreen and ToYellow) that moves to a new state.
 
@@ -68,5 +68,5 @@ Simple console application that can send commands to Server and TrafficLightServ
 It also displays all events sent by the servers.
 
 ### TrafficLightDisplay
-Simple WPF application listening on events and displaying traffic lights and their state.
+Simple WPF application listening to events and displaying traffic lights and their state.
 
