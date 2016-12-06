@@ -43,7 +43,9 @@ ToRed</panel_attributes>
       <w>90</w>
       <h>40</h>
     </coordinates>
-    <panel_attributes>RedYellow</panel_attributes>
+    <panel_attributes>lt=.
+RedYellow
+&lt;transient&gt;</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -65,7 +67,9 @@ ToRed</panel_attributes>
       <w>90</w>
       <h>40</h>
     </coordinates>
-    <panel_attributes>Yellow</panel_attributes>
+    <panel_attributes>lt=.
+Yellow
+&lt;transient&gt;</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
