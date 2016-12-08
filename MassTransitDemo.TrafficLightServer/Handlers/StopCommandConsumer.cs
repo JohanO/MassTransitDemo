@@ -29,6 +29,10 @@ namespace MassTransitDemo.TrafficLightServer.Handlers
             {
                 await context.RespondResultAsync(true, $"TrafficLight {cmd.TrafficLightId} does not exist");
             }
+            else if (!_saga.CanFire(cmd.TrafficLightId, Trigger.ToYellow))
+            {
+                await context.RespondResultAsync(true, $"TrafficLight {cmd.TrafficLightId} in wrong state");
+            }
             else
             {
                 await context.RespondResultAsync(false, "Validated OK");

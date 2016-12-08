@@ -11,7 +11,11 @@ namespace MassTransitDemo.Client
         public static async Task WriteResultAsync(this Task<ICommandValidationResult> resultTask)
         {
             var result = await resultTask;
-            await Out.WriteLineAsync($"Result: {result?.Message}");
+            if (result != null)
+            {
+                var status = result.Fail ? "Fail" : "Success";
+                await Out.WriteLineAsync($"Result: {status}, {result.Message}");
+            }
         }
     }
 }

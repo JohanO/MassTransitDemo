@@ -27,7 +27,7 @@ namespace MassTransitDemo.TrafficLightServer.Handlers
 
             if (_repository.Exists(cmd.TrafficLightId))
             {
-                await context.RespondResultAsync(false, "Already exist");
+                await context.RespondResultAsync(true, "Already exist");
             }
             else
             {

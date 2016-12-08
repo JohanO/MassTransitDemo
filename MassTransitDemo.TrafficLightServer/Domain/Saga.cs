@@ -49,6 +49,12 @@ namespace MassTransitDemo.TrafficLightServer.Domain
                 .Permit(Trigger.ToRed, State.Red);
         }
 
+        public bool CanFire(int trafficLIghtId, Trigger trigger)
+        {
+            _trafficLightId = trafficLIghtId;
+            return _stateMachine.CanFire(trigger);
+        }
+
         public Task FireAsync(int trafficLightId, Trigger trigger)
         {
             _trafficLightId = trafficLightId;
