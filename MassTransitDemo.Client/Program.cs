@@ -47,7 +47,9 @@ namespace MassTransitDemo.Client
                         break;
 
                     case '2':
-                        await otherClient.Request(new DoOtherStuff(Random.Next(20))).WriteResultAsync();
+                        var number = Random.Next(4);
+                        WriteLine($"Sending DoOtherStuff, Number = {number}");
+                        await otherClient.Request(new DoOtherStuff(number)).WriteResultAsync();
                         break;
 
                     case '3':

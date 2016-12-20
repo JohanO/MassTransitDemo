@@ -24,7 +24,7 @@ namespace MassTransitDemo.Client
             Out.WriteLineAsync($"StuffDone: StuffNumber = {context.Message.StuffNumber}");
 
         public Task Consume(ConsumeContext<IOtherStuffDone> context) =>
-            Out.WriteLineAsync($"OtherStuffDone: {context.Message.OtherStuffNumber}");
+            Out.WriteLineAsync($"OtherStuffDone: Number = {context.Message.OtherStuffNumber}");
 
         public Task Consume(ConsumeContext<Fault> context) =>
             Out.WriteLineAsync($"Fault: {context.Message.Exceptions[0].Message}");

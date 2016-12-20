@@ -17,7 +17,7 @@ namespace MassTransitDemo.Server
         public async Task Consume(ConsumeContext<IDoOtherStuff> context)
         {
             var cmd = context.Message;
-            await Console.Out.WriteLineAsync($"Received IDoOtherStuff command: Id={cmd.CommandId}; Number={cmd.OtherStuffNumber}");
+            await Console.Out.WriteLineAsync($"Received IDoOtherStuff command: Number={cmd.OtherStuffNumber}");
 
             await context.RespondAsync<ICommandValidationResult>(new
             {
@@ -29,7 +29,7 @@ namespace MassTransitDemo.Server
 
             await Console.Out.WriteLineAsync("Processing other stuff...");
             await Task.Delay(5000);
-            await Console.Out.WriteLineAsync("Done other stuff");
+            await Console.Out.WriteLineAsync($"Done other stuff, Number={cmd.OtherStuffNumber}");
 
             await context.Publish<IOtherStuffDone>(new { cmd.OtherStuffNumber });
         }

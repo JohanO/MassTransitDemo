@@ -7,7 +7,7 @@ using System;
 
 using MassTransit;
 using MassTransit.Policies;
-
+using MassTransitDemo.Contract;
 using Topshelf;
 
 namespace MassTransitDemo.Server
@@ -46,8 +46,9 @@ namespace MassTransitDemo.Server
                 {
                     e.UseRetry(new ImmediateRetryPolicy(new AllPolicyExceptionFilter(), 2));
                     e.Consumer<DoStuffConsumer>();
-                    e.Consumer<DoOtherStuffConsumer>();
+                    e.Consumer<DoOtherStuffConsumer>(cc => cc.ConfigureMessage<IDoOtherStuff>(cm => cm.UsePartitioner(10, ctx => ctx.Message.OtherStuffNumber.ToString())));
                     e.Consumer<DoBadStuffConsumer>();
+                    e.PrefetchCount = 8;
                 });
             });
     }
